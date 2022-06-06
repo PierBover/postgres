@@ -212,15 +212,11 @@ export const escapeIdentifier = function escape(str) {
 }
 
 export const inferType = function inferType(x) {
-  return (
-    x instanceof Parameter ? x.type :
-    x instanceof Date ? 1184 :
-    x instanceof Uint8Array ? 17 :
-    (x === true || x === false) ? 16 :
-    typeof x === 'bigint' ? 20 :
-    Array.isArray(x) ? inferType(x[0]) :
-    0
-  )
+  return x instanceof Parameter
+    ? x.type
+    : Array.isArray(x)
+      ? inferType(x[0])
+      : 0
 }
 
 const escapeBackslash = /\\/g
